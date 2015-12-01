@@ -93,16 +93,31 @@ var scheduleSMS = function(year, month, day, hour, minute, sec, numVal, bodyVal)
 }
 
 var getUsers = function() {
+	var contactToday = {};
 	var ContactsObject = Parse.Object.extend("ketchupData");
 	var query = new Parse.Query(ContactsObject);
 	query.descending("createdAt").find( {
 		success: function (results) { // Find all values in database and stuff into results. Results will be in descending order by creation date.
 			for (var i = 0; i < results.length; i++) {
-		      var object = results[i];
-		      var daysLeft = calculateDaysLeft(object.get('lastCall'), object.get('interval'), object.get('unit'));
-		      console.log(object.get('name') + " - " + daysLeft);
-		      //if(daysLeft is )
+		      	var object = results[i];
+		      	var daysLeft = calculateDaysLeft(object.get('lastCall'), object.get('interval'), object.get('unit'));
+		      	console.log(object.get('name') + " - " + daysLeft);
+		      	if(daysLeft == 1) {
+		      		//contactToday.push(object);
+		      		if(!contactToday.hasOwnProperty(object.get('phone'))) {
+		      			contactToday[object.get('phone')] = [object.get('name')];
+		      		}
+		      		else {
+		      			contactToday[object.get('phone')] = contactToday[object.get('phone')].push(object.get('name'))
+		      		}
+		      	}
 		    }
+
+		    console.log(JSON.stringify(contactToday))
+		    // if(contactToday.length > 0) {
+		    // 	number = 
+		    // }
+
 		},
 		error: function (error) {
 			console.log("Error in IndexController: " + error.code + " " + error.message);
