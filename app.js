@@ -30,6 +30,7 @@ var sendSMS = function(numVal, bodyVal) {
 var scheduleSMS = function(year, month, day, hour, minute, sec, numVal, bodyVal) {
 
 	var date = new Date(year, month, day, hour, minute, sec);
+	console.log("Scheduled Date is: " + date);
 
 	var smsJob = schedule.scheduleJob(date, function(){
 		sendSMS(numVal, bodyVal);
@@ -59,14 +60,14 @@ app.get('/text', function (req, res){
 		hourVal = hourVal + 12;
 	}
 
-	console.log(numVal);
-	console.log(bodyVal);
-	console.log(monthVal);
-	console.log(dayVal);
-	console.log(yearVal);
-	console.log(hourVal);
-	console.log(minuteVal);
-	console.log(ampmVal);
+	console.log("Phone Number: " + numVal);
+	console.log("Body: " + bodyVal);
+	console.log("Month: " + monthVal);
+	console.log("Day: " + dayVal);
+	console.log("Year: " + yearVal);
+	console.log("Hour: " + hourVal);
+	console.log("Minute: " + minuteVal);
+	console.log("AP/PM: " + ampmVal);
 	
 	scheduleSMS(yearVal, monthVal, dayVal, hourVal, minuteVal, secVal, numVal, bodyVal);
 	console.log("Schedule Check");
