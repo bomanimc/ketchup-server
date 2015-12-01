@@ -92,11 +92,44 @@ var scheduleSMS = function(year, month, day, hour, minute, sec, numVal, bodyVal)
 	});
 }
 
+var scheduleQuery = function() {
+
+// *    *    *    *    *    *
+// ┬    ┬    ┬    ┬    ┬    ┬
+// │    │    │    │    │    |
+// │    │    │    │    │    └ day of week (0 - 7) (0 or 7 is Sun)
+// │    │    │    │    └───── month (1 - 12)
+// │    │    │    └────────── day of month (1 - 31)
+// │    │    └─────────────── hour (0 - 23)
+// │    └──────────────────── minute (0 - 59)
+// └───────────────────────── second (0 - 59, OPTIONAL)
+
+	var queryJob = schedule.scheduleJob('*/5 * * * *', function(){
+	    getUsers();
+	});
+
+	queryJob.cancel();
+}
+
+var scheduleQuery = function(year, month, day, hour, minute, sec) {
+
+	var date = new Date(year, month, day, hour, minute, sec);
+	console.log("Scheduled Date is: " + date);
+
+	var smsJob = schedule.scheduleJob(date, function(){
+		getUsers();
+		console.log("Re-queried Parse.");
+	});
+}
+
 var sendStructuredMessages = function(urgentContacts) {
 	for (var num in urgentContacts) {
-		contactString = urgentContacts[num].join(", ");
-		var message = "Don't forget to KetchUp with: " + contactString + ". Thanks!";
+		contactString = urgentContacts[num].join(" and ");
+		var message = "Don't forget to KetchUp with " + contactString + ". Thanks!";
 		console.log(message);
+
+		numString = "+"+num;
+		sendSMS(numString, message);
 	}
 	
 }
@@ -135,9 +168,12 @@ var getUsers = function() {
 app.get('/', function (req, res){
 	var date = new Date();
 	console.log("Server Date: " + date +"\n---------------------------------\n")
-	getUsers();
 	res.send(200);
 });
+
+//var scheduleQuery = function(year, month, day, hour, minute, sec, numVal, bodyVal)
+scheduleQuery(2015, 10, 30, 23, 42, 0);
+
 
 app.get('/text', function (req, res){
 	console.log("API endpoint reached.");
