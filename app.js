@@ -57,8 +57,8 @@ var getUsers = function() {
 	  error: function(error) {
 	    console.log("Error: " + error.code + " " + error.message);
 	  }
-	}
-}
+	});
+};
 
 app.get('/', function (req, res){
 	getUsers();
