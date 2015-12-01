@@ -108,7 +108,7 @@ var getUsers = function() {
 		      			contactToday[object.get('phoneId')] = [object.get('name')];
 		      		}
 		      		else {
-		      			contactToday[object.get('phoneId')] = contactToday[object.get('phoneId')].push(object.get('name'))
+		      			contactToday[object.get('phoneId')] = contactToday[object.get('phoneId')].concat([object.get('name')])
 		      		}
 		      	}
 		    }
