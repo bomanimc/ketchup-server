@@ -104,11 +104,11 @@ var getUsers = function() {
 		      	console.log(object.get('name') + " - " + daysLeft);
 		      	if(daysLeft == 1) {
 		      		//contactToday.push(object);
-		      		if(!contactToday.hasOwnProperty(object.get('phone'))) {
-		      			contactToday[object.get('phone')] = [object.get('name')];
+		      		if(!contactToday.hasOwnProperty(object.get('phoneId'))) {
+		      			contactToday[object.get('phoneId')] = [object.get('name')];
 		      		}
 		      		else {
-		      			contactToday[object.get('phone')] = contactToday[object.get('phone')].push(object.get('name'))
+		      			contactToday[object.get('phoneId')] = contactToday[object.get('phoneId')].push(object.get('name'))
 		      		}
 		      	}
 		    }
