@@ -7,7 +7,7 @@ var schedule = require('node-schedule');
 var app = express();
 
 //Twilio-related variables
-var twilioNum = "+16159002993";
+var twilioNum = "+16153340519";
 var accountSid = "AC9857a6b502c9981ffa953ab52c318a35";
 var authToken = "b170ec7a985058f30aafe411d5b65994";
 var client = require('twilio')(accountSid, authToken);
@@ -69,6 +69,7 @@ app.get('/text', function (req, res){
 	console.log(ampmVal);
 	
 	scheduleSMS(yearVal, monthVal, dayVal, hourVal, minuteVal, secVal, numVal, bodyVal);
+	console.log("Schedule Check");
 	res.send('Scheduled an imaginary text!');
 });
 
