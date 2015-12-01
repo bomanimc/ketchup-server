@@ -111,6 +111,8 @@ var getUsers = function() {
 };
 
 app.get('/', function (req, res){
+	var date = new Date();
+	console.log("Server Date: " + date +"\n---------------------------------\n")
 	getUsers();
 	res.send(200);
 });
