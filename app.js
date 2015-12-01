@@ -4,7 +4,7 @@ var http = require('http');
 var path = require('path');
 var engines = require('consolidate');
 var schedule = require('node-schedule');
-var Parse = require('parse').Parse;
+var Parse = require('parse/node').Parse;
 
 Parse.initialize("Nz3eFHamqLSy9TDFupG0jmPCJ6ywLoXwsmcgQjH0", "jQM6VnLUno63VjRgolsqOa5LjYXjMxZi6qMSKzfn");
 
