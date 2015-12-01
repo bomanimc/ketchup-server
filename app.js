@@ -43,20 +43,18 @@ var scheduleSMS = function(year, month, day, hour, minute, sec, numVal, bodyVal)
 }
 
 var getUsers = function() {
-	var Users = Parse.Object.extend("Users");
-	var query = new Parse.Query(Users);
-	query.find({
-	  success: function(results) {
-	    console.log("Successfully retrieved Users");
-	    // Do something with the returned Parse.Object values
-	    for (var i = 0; i < results.length; i++) {
-	      var object = results[i];
-	      console.log(object.get('name'));
-	    }
-	  },
-	  error: function(error) {
-	    console.log("Error: " + error.code + " " + error.message);
-	  }
+	var ContactsObject = Parse.Object.extend("ketchupData");
+	var query = new Parse.Query(ContactsObject);
+	query.descending("createdAt").find( {
+		success: function (results) { // Find all values in database and stuff into results. Results will be in descending order by creation date.
+			for (var i = 0; i < results.length; i++) {
+		      var object = results[i];
+		      console.log(object.get('name'));
+		    }
+		},
+		error: function (error) {
+			console.log("Error in IndexController: " + error.code + " " + error.message);
+		}
 	});
 };
 
