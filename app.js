@@ -4,6 +4,10 @@ var http = require('http');
 var path = require('path');
 var engines = require('consolidate');
 var schedule = require('node-schedule');
+var Parse = require('parse').Parse;
+
+Parse.initialize("Nz3eFHamqLSy9TDFupG0jmPCJ6ywLoXwsmcgQjH0", "jQM6VnLUno63VjRgolsqOa5LjYXjMxZi6qMSKzfn");
+
 var app = express();
 
 //Twilio-related variables
@@ -38,7 +42,26 @@ var scheduleSMS = function(year, month, day, hour, minute, sec, numVal, bodyVal)
 	});
 }
 
+var getUsers = function() {
+	var Users = Parse.Object.extend("Users");
+	var query = new Parse.Query(Users);
+	query.find({
+	  success: function(results) {
+	    console.log("Successfully retrieved Users");
+	    // Do something with the returned Parse.Object values
+	    for (var i = 0; i < results.length; i++) {
+	      var object = results[i];
+	      console.log(object.get('name'));
+	    }
+	  },
+	  error: function(error) {
+	    console.log("Error: " + error.code + " " + error.message);
+	  }
+	}
+}
+
 app.get('/', function (req, res){
+	getUsers();
 	res.send(200);
 });
 
