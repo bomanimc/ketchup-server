@@ -12,7 +12,7 @@ var accountSid = "AC9857a6b502c9981ffa953ab52c318a35";
 var authToken = "b170ec7a985058f30aafe411d5b65994";
 var client = require('twilio')(accountSid, authToken);
 
-app.set('port', 8080);
+app.set('port', process.env.PORT || 8080);
 
 
 var sendSMS = function(numVal, bodyVal) {
