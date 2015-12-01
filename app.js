@@ -77,7 +77,7 @@ var sendSMS = function(numVal, bodyVal) {
 	    to: numVal,
 	    from: twilioNum,
 	}, function(err, message) {
-	    //process.stdout.write(message.sid);
+	    console.log(err + " " + message);
 	});
 };
 
@@ -172,7 +172,7 @@ app.get('/', function (req, res){
 });
 
 //var scheduleQuery = function(year, month, day, hour, minute, sec, numVal, bodyVal)
-scheduleQuery(2015, 10, 30, 23, 42, 0);
+scheduleQuery(2015, 10, 30, 23, 51, 0);
 
 
 app.get('/text', function (req, res){
