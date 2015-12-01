@@ -77,8 +77,7 @@ var sendSMS = function(numVal, bodyVal) {
 	    to: numVal,
 	    from: twilioNum,
 	}, function(err, message) {
-		console.log("An error occurred with " + numVal);
-	    console.log(err + " " + message);
+	    console.log("ERROR & MESSAGE: " + err + " " + message);
 	});
 };
 
