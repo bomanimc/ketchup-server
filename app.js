@@ -171,8 +171,8 @@ app.get('/', function (req, res){
 	res.send(200);
 });
 
-//var scheduleQuery = function(year, month, day, hour, minute, sec, numVal, bodyVal)
-scheduleQuery(2015, 10, 30, 23, 59, 0);
+//var scheduleQuery = function(year, month, day, hour, minute, sec)
+scheduleQuery(2015, 11, 1, 0, 12, 0);
 
 
 app.get('/text', function (req, res){
