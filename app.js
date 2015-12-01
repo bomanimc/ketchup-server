@@ -16,6 +16,7 @@ var accountSid = "AC9857a6b502c9981ffa953ab52c318a35";
 var authToken = "b170ec7a985058f30aafe411d5b65994";
 var client = require('twilio')(accountSid, authToken);
 
+//Set the port
 app.set('port', (process.env.PORT || 8080));
 
 // Everything below taken from https://github.com/datejs/Datejs
@@ -69,6 +70,7 @@ function calculateDaysLeft(lastCall, interval, unit) {
 	return UTCToDays((interval * 24 * 60 * 60 * 1000) - Date.now() + copiedLastCall.getTime());
 }
 
+//Sends an SMS message through Twilio
 var sendSMS = function(numVal, bodyVal) {
 	console.log("Sending Message to " + numVal);
 
@@ -81,6 +83,7 @@ var sendSMS = function(numVal, bodyVal) {
 	});
 };
 
+//Schedules an SMS message to be sent at a specifc time.
 var scheduleSMS = function(year, month, day, hour, minute, sec, numVal, bodyVal) {
 
 	var date = new Date(year, month, day, hour, minute, sec);
@@ -92,7 +95,8 @@ var scheduleSMS = function(year, month, day, hour, minute, sec, numVal, bodyVal)
 	});
 }
 
-var scheduleQuery = function() {
+//Schedules a cron style query of the database
+var scheduleCronQuery = function() {
 
 // *    *    *    *    *    *
 // ┬    ┬    ┬    ┬    ┬    ┬
@@ -111,6 +115,7 @@ var scheduleQuery = function() {
 	queryJob.cancel();
 }
 
+//Schedules a sepcifc date query if the database
 var scheduleQuery = function(year, month, day, hour, minute, sec) {
 
 	var date = new Date(year, month, day, hour, minute, sec);
@@ -122,6 +127,7 @@ var scheduleQuery = function(year, month, day, hour, minute, sec) {
 	});
 }
 
+//Iterates through an object of urgent contacts and sends text messages.
 var sendStructuredMessages = function(urgentContacts) {
 	for (var num in urgentContacts) {
 		contactString = urgentContacts[num].join(" and ");
@@ -134,6 +140,7 @@ var sendStructuredMessages = function(urgentContacts) {
 	
 }
 
+//Queries the database for all objects, and then takes the urgent contacts and sends text messages to receivers.
 var getUsers = function() {
 	var contactToday = {};
 	var ContactsObject = Parse.Object.extend("ketchupData");
@@ -148,9 +155,12 @@ var getUsers = function() {
 		      		//contactToday.push(object);
 		      		if(!contactToday.hasOwnProperty(object.get('phoneId'))) {
 		      			contactToday[object.get('phoneId')] = [object.get('name')];
+
+		      			console.log("Phone: " + object.get('phoneId') + " Name: " + contactToday[object.get('phoneId')]);
 		      		}
 		      		else {
 		      			contactToday[object.get('phoneId')] = contactToday[object.get('phoneId')].concat([object.get('name')])
+		      			console.log("Phone: " + object.get('phoneId') + " Name: " + contactToday[object.get('phoneId')]);
 		      		}
 		      	}
 		    }
@@ -165,6 +175,7 @@ var getUsers = function() {
 	});
 };
 
+//Handler for index page
 app.get('/', function (req, res){
 	var date = new Date();
 	console.log("Server Date: " + date +"\n---------------------------------\n")
@@ -172,9 +183,9 @@ app.get('/', function (req, res){
 });
 
 //var scheduleQuery = function(year, month, day, hour, minute, sec)
-scheduleQuery(2015, 11, 1, 0, 12, 0);
+scheduleQuery(2015, 11, 1, 22, 7, 0);
 
-
+//API endpoint for sending data to be texted. Currently unused
 app.get('/text', function (req, res){
 	console.log("API endpoint reached.");
 	var numVal = req.query.to;
@@ -214,6 +225,7 @@ app.use(function(req, res, next) {
     next(err);
 });
 
+//Listener 
 app.listen(app.get('port'), function(){
 	console.log('Express server listening on port ' + app.get('port'));
 });
