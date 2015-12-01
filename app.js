@@ -92,6 +92,15 @@ var scheduleSMS = function(year, month, day, hour, minute, sec, numVal, bodyVal)
 	});
 }
 
+var sendStructuredMessages = function(urgentContacts) {
+	for (var num in urgentContacts) {
+		contactString = urgentContacts[num].join(", ");
+		var message = "Don't forget to KetchUp with: " + contactString + ". Thanks!";
+		console.log(message);
+	}
+	
+}
+
 var getUsers = function() {
 	var contactToday = {};
 	var ContactsObject = Parse.Object.extend("ketchupData");
@@ -113,14 +122,12 @@ var getUsers = function() {
 		      	}
 		    }
 
-		    console.log(JSON.stringify(contactToday))
-		    // if(contactToday.length > 0) {
-		    // 	number = 
-		    // }
+		    console.log(JSON.stringify(contactToday));
+		    sendStructuredMessages(contactToday);
 
 		},
 		error: function (error) {
-			console.log("Error in IndexController: " + error.code + " " + error.message);
+			console.log("Error in Parse Query " + error.code + " " + error.message);
 		}
 	});
 };
