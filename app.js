@@ -134,7 +134,7 @@ var sendStructuredMessages = function(urgentContacts) {
 		var message = "Don't forget to KetchUp with " + contactString + ". Thanks!";
 		console.log(message);
 
-		numString = "+"+num;
+		numString = ""+num;
 		sendSMS(numString, message);
 	}
 	
