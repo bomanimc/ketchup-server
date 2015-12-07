@@ -1,4 +1,4 @@
-# Ketch Up Text Notification Serveer
+# Ketch Up Text Notification Server
 A text messaging server for the prototype app called KetchUp, which was built for our clients in the Northwestern Master's of Product Design &amp; Development program.
 
 ##Installation
